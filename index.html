@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Generator</title>
+      <link rel="stylesheet" href="assets/style.css">
+
+</head>
+<body>
+
+<div class="container">
+  <h2>Text Generator</h2>
+
+  <select id="type">
+    <option value="word">Word</option>
+    <option value="sentence">Sentence</option>
+    <option value="paragraph">Paragraph</option>
+  </select>
+
+  <input type="number" id="count" placeholder="Enter quantity" min="1" value="1">
+
+  <button onclick="generateText()">Generate</button>
+
+  <div class="output" id="output"></div>
+</div>
+
+<script>
+  const words = [
+    "sky", "river", "code", "dream", "light", "power", "future",
+    "design", "smart", "quick", "bright", "silent", "bold"
+  ];
+
+  function getRandomWord() {
+    return words[Math.floor(Math.random() * words.length)];
+  }
+
+  function generateSentence() {
+    let length = Math.floor(Math.random() * 8) + 5;
+    let sentence = [];
+
+    for (let i = 0; i < length; i++) {
+      sentence.push(getRandomWord());
+    }
+
+    let result = sentence.join(" ");
+    return result.charAt(0).toUpperCase() + result.slice(1) + ".";
+  }
+
+  function generateParagraph() {
+    let length = Math.floor(Math.random() * 4) + 3;
+    let paragraph = [];
+
+    for (let i = 0; i < length; i++) {
+      paragraph.push(generateSentence());
+    }
+
+    return paragraph.join(" ");
+  }
+
+  function generateText() {
+    const type = document.getElementById("type").value;
+    const count = document.getElementById("count").value;
+    const output = document.getElementById("output");
+
+    let result = [];
+
+    for (let i = 0; i < count; i++) {
+      if (type === "word") {
+        result.push(getRandomWord());
+      } else if (type === "sentence") {
+        result.push(generateSentence());
+      } else if (type === "paragraph") {
+        result.push(generateParagraph());
+      }
+    }
+
+    output.innerHTML = result.join("<br><br>");
+  }
+</script>
+
+</body>
+</html>
